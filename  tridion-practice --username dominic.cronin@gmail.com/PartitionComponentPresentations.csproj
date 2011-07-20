@@ -8,7 +8,7 @@
     <ProjectGuid>{0B1F3A24-F599-40EC-AC83-D240660A9CA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PartitionComponentPresentations</RootNamespace>
+    <RootNamespace>TridionPractice</RootNamespace>
     <AssemblyName>PartitionComponentPresentations</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 using Tridion.ContentManager.Templating.Assembly;
-[assembly: TcmTemplateTitle("PartitionComponentPresentations")]
+[assembly: TcmTemplateTitle("Assy TridionPractice")]
 
 [assembly: ComVisible(false)]
 

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Tridion.ContentManager.Templating;
+using Tridion.ContentManager.Templating.Assembly;
 
-namespace ClassifyComponentPresentations
+namespace TridionPractice
 {
     class PartitionExample : PartitionComponentPresentations
     {
@@ -12,8 +13,8 @@ namespace ClassifyComponentPresentations
         {
             base.Transform(engine, package);
             partitionCPs(new List<PartitionDescriptor>(){
-                   new PartitionDescriptor("banana", (c, ct) => c.Schema.Title == "Foobar"), 
-                   new PartitionDescriptor("fruitcake", (c, ct) => ct.Title == "FrumpyPlump")
+                   new PartitionDescriptor("AllTheFA3s", (c, ct) => c.Schema.Title == "FA3"), 
+                   new PartitionDescriptor("Foo", (c, ct) => ct.Title == "CT Foo")
             });
         }
     }
