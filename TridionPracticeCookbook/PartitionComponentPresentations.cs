@@ -68,6 +68,10 @@ namespace TridionPractice
                 {
                     cpLists[Package.ComponentsName].Add(templatingCP);
                 }
+
+                Item componentItem = _package.CreateTridionItem(ContentType.Component, new TcmUri(cp.Component.Id));
+                _package.PushItem(Package.ComponentName, componentItem);
+
             }
 
             foreach (var list in cpLists)
