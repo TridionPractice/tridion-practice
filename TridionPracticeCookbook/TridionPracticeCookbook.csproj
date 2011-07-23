@@ -8,8 +8,8 @@
     <ProjectGuid>{0B1F3A24-F599-40EC-AC83-D240660A9CA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TridionPractice</RootNamespace>
-    <AssemblyName>PartitionComponentPresentations</AssemblyName>
+    <RootNamespace>TridionPractice.Cookbook</RootNamespace>
+    <AssemblyName>TridionPractice.Cookbook</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
