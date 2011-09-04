@@ -18,5 +18,4 @@ iisreset
 &{
   trap [Exception] {}
   $runningServices | where { "Stopped", "StopPending" -contains $_.Status } | start-service
-  }
-}
+ }
