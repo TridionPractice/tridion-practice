@@ -1,0 +1,12 @@
+U:\RTFExtensions\Button.Reference\bin\Button.Reference.dll
+U:\RTFExtensions\Button.Reference\bin\Button.Reference.pdb
+U:\RTFExtensions\Button.Reference\bin\Tridion.Web.UI.Core.dll
+U:\RTFExtensions\Button.Reference\bin\Interop.TDSI18NLib.dll
+U:\RTFExtensions\Button.Reference\bin\de\Tridion.Web.UI.Core.resources.dll
+U:\RTFExtensions\Button.Reference\bin\es\Tridion.Web.UI.Core.resources.dll
+U:\RTFExtensions\Button.Reference\bin\fr\Tridion.Web.UI.Core.resources.dll
+U:\RTFExtensions\Button.Reference\bin\ja\Tridion.Web.UI.Core.resources.dll
+U:\RTFExtensions\Button.Reference\bin\nl\Tridion.Web.UI.Core.resources.dll
+U:\RTFExtensions\Button.Reference\obj\Debug\ResolveAssemblyReference.cache
+U:\RTFExtensions\Button.Reference\obj\Debug\Button.Reference.dll
+U:\RTFExtensions\Button.Reference\obj\Debug\Button.Reference.pdb

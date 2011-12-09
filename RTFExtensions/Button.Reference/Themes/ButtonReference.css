@@ -1,0 +1,20 @@
+﻿.tridion #ButtonReference .image 
+{
+    background-image:url({ThemePath}/Images/ButtonReference_32x32.png);
+    background-repeat:no-repeat;
+}
+
+.tridion .ribbontoolbar.minimized #ButtonReference .image,
+.tridion .contextmenu #ButtonReference .image
+{
+    background-image:url({ThemePath}/Images/ButtonReference_16x16.png);
+}
+
+.customButton
+{
+	cursor: pointer;
+	float: right;
+	font-size: 11px;
+	margin-right: 10px;
+	margin-top: 8px;
+}
