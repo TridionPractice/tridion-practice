@@ -1,0 +1,1 @@
+This project is dependent on Tridion.Web.UI.Core.dll which, due to distribution constraints, isn't included in the solution.

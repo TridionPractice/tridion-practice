@@ -48,9 +48,6 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="Tridion.Web.UI.Core">
-      <HintPath>C:\Tridion\web\WebUI\WebRoot\bin\Tridion.Web.UI.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Commands\ButtonReference.js" />
@@ -70,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Popups\PopupReference.aspx.cs">
       <DependentUpon>PopupReference.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Popups\PopupReference.aspx.designer.cs">
       <DependentUpon>PopupReference.aspx</DependentUpon>
