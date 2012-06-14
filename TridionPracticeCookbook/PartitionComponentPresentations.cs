@@ -1,4 +1,4 @@
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,28 +32,33 @@ namespace TridionPractice
             TcmUri pageUri = new TcmUri(pageAsSource.GetValue("ID"));
             Page page = (Page)_engine.GetSession().GetObject(pageUri);
 
+            // Start by setting up the list of Component Presentations that we are going to populate
             var cpLists = new Dictionary<string, ComponentPresentationList>();
             foreach (var pd in partitionDescriptors)
             {
                 cpLists.Add(pd.name, new ComponentPresentationList());
             }
 
+            // Finally add one called Components, for all the ones not matched by a partition descriptor
             try
             {
                 cpLists.Add(Package.ComponentsName, new ComponentPresentationList());
             }
             catch (ArgumentException ex)
             {			
+                // There may be other reasons why you'd get an argument exception here. Production code would deal with this...
                 throw new ComponentsNameIsReservedException("Your own component presentation lists may not be called Components.", ex);
             }
 
 
+            // OK - now we loop through the Component Presentations in the Page...
             foreach (var cp in page.ComponentPresentations)
             {
                 Tridion.ContentManager.Templating.ComponentPresentation templatingCP =
                     new Tridion.ContentManager.Templating.ComponentPresentation(
                     new TcmUri(cp.Component.Id), new TcmUri(cp.ComponentTemplate.Id));
 
+                // ... and if they match one of our partitions, add it to the appropriate list
                 bool matched = false;
                 foreach (var pd in partitionDescriptors)
                 {
@@ -64,16 +69,19 @@ namespace TridionPractice
                         break;
                     }
                 }
+                // ... if not, put it into "Components"
                 if (!matched)
                 {
                     cpLists[Package.ComponentsName].Add(templatingCP);
                 }
 
+                // We want the components in the package as well as the collections, for compatibility with ExtractComponentsFromPage
                 Item componentItem = _package.CreateTridionItem(ContentType.Component, new TcmUri(cp.Component.Id));
                 _package.PushItem(Package.ComponentName, componentItem);
 
             }
 
+            // Add each collection to the package, and we're done.
             foreach (var list in cpLists)
             {
                 ComponentPresentationList cpl = (ComponentPresentationList)list.Value;
@@ -87,6 +95,7 @@ namespace TridionPractice
 
         protected struct PartitionDescriptor
         {
+            // A constructor that allows you to pass name and test as arguments
             public PartitionDescriptor(string name, Func<
                     Tridion.ContentManager.ContentManagement.Component
                     , Tridion.ContentManager.CommunicationManagement.ComponentTemplate
@@ -96,6 +105,7 @@ namespace TridionPractice
                 this.test = test;
             }
             public string name;
+            // Function descriptor to support lambda expression syntax
             public Func<
                     Tridion.ContentManager.ContentManagement.Component
                     , Tridion.ContentManager.CommunicationManagement.ComponentTemplate
