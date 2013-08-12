@@ -139,8 +139,8 @@ $deployerConf.Save("$UploadWebSiteDirectoryPath\bin\config\cd_deployer_conf.xml"
 # Link
 $linkConfig = [XDocument]::Load("$InstallerHome\Content Delivery\resources\configurations\cd_link_conf_sample.xml")
 $linkConfig.Element("Configuration").Add([XElement]::Parse("<License Location='$LicensePath'/>"))
-$linkConfig.Save("$UploadWebSiteDirectoryPath\bin\config\cd_deployer_conf.xml")
-$linkConfig.Save("$MainWebSiteDirectoryPath\bin\config\cd_deployer_conf.xml")
+$linkConfig.Save("$UploadWebSiteDirectoryPath\bin\config\cd_link_conf.xml")
+$linkConfig.Save("$MainWebSiteDirectoryPath\bin\config\cd_link_conf.xml")
 
 #Wai
 $waiConfig = [XDocument]::Load("$InstallerHome\Content Delivery\resources\configurations\cd_wai_conf_sample.xml")
