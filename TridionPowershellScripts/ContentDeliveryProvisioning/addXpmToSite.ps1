@@ -111,12 +111,13 @@ $storagesElement.AddFirst($WrappersElement)
 $storageBindings = [XElement]::Parse("<StorageBindings><Bundle src='preview_dao_bundle.xml' /></StorageBindings>")
 $storagesElement.AddFirst($storageBindings)
 
-# switch to XmlDocument to use existing function
-$StorageConfig.Save($storageConfLocation)
-$storageConfig = [xml](gc $storageConfLocation)
-$previewStorageElement = CreateDatabaseStorageElement $storageConfig $previewDbServerName $previewDatabaseName $previewDbUserName $previewDbPassword
-$sessionWrapper = $storageConfig.Configuration.Global.Storages.Wrappers.Wrapper | ? {$_.Name -eq "SessionWrapper"}
-$sessionWrapper.AppendChild($previewStorageElement) | Out-Null
+$previewStorageElement = CreateDatabaseStorageXElement -ServerName $previewDbServerName `
+							-DatabaseName $previewDatabaseName `
+							-DatabasePassword $previewDbPassword `
+							-DatabaseUserName $previewDbUserName `
+							-StorageElementId "StorageDb"
+
+$wrappersElement.Element("Wrapper").AddFirst($previewStorageElement)							
 $storageConfig.Save($storageConfLocation)
 
 #

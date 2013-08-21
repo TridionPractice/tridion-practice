@@ -107,7 +107,7 @@ function CreateDatabaseStorageXElement {
 "@
 	$storageXElement = [XElement]::Parse($template)
 	$storageXElement.SetAttributeValue("Id", $storageElementId)
-	$storageXElement.Element("DataSource").Elements("Property") | ? {$_.Attribute("Name").Value -eq "servername"} | % {$_.SetAttributeValue("Value", $ServerName)}
+	$storageXElement.Element("DataSource").Elements("Property") | ? {$_.Attribute("Name").Value -eq "serverName"} | % {$_.SetAttributeValue("Value", $ServerName)}
 	$storageXElement.Element("DataSource").Elements("Property") | ? {$_.Attribute("Name").Value -eq "databaseName"} | % {$_.SetAttributeValue("Value", $DatabaseName)}
 	$storageXElement.Element("DataSource").Elements("Property") | ? {$_.Attribute("Name").Value -eq "user"} | % {$_.SetAttributeValue("Value", $DatabaseUserName)}
 	$storageXElement.Element("DataSource").Elements("Property") | ? {$_.Attribute("Name").Value -eq "password"} | % {$_.SetAttributeValue("Value", $DatabasePassword)}
