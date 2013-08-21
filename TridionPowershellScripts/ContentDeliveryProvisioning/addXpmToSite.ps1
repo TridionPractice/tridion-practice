@@ -28,7 +28,10 @@ param
     [string]$previewDbUserName = "TridionBrokerUser",
 
     [parameter(Mandatory=$false)]
-    [string]$previewDbPassword = "Tridion1"
+    [string]$previewDbPassword = "Tridion1", 
+
+    [parameter(Mandatory=$true)]
+    [string]$webPublicationId
 				
 )
 
@@ -127,7 +130,15 @@ cp "$InstallerHome\Content Delivery\roles\preview\web\configuration\samples\cd_a
 cp "$InstallerHome\Content Delivery\roles\preview\web\configuration\samples\cd_ambient_cartridge_conf_sample.xml" "$MainSiteDirPath\bin\config\cd_ambient_cartridge_conf.xml"
 
 #cd_wai_conf is already as it should be
-# cd_dynamic_conf is already as it should be
+# cd_dynamic_conf already has a mapping, which we should update
+$dynamicConfLocation = "$MainSiteDirPath\bin\config\cd_dynamic_conf.xml"
+$dynamicConfig = [XDocument]::Load($dynamicConfLocation)
+$publicationElement = $dynamicConfig.Element("Configuration").Element("URLMappings").Element("StaticMappings").Element("Publications").Element("Publication")
+$publicationElement.SetAttributeValue("Id", $webPublicationId)
+$publicationElement.Element("Host") | ? {$_.Attribute("Port").Value -eq "80"} | % {$_.SetAttributeValue("Domain", $MainWebSiteName)}
+$publicationElement.Element("Host") | ? {$_.Attribute("Port").Value -eq "8080"} | % {$_.Remove()}
+$dynamicConfig.Save($dynamicConfLocation)
+
 # cd_link_conf is already as it should be.
 # TODO could copy jvm_sample, but it currently doesn't configure anything.  Check the docs
 
