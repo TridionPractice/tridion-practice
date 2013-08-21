@@ -132,7 +132,7 @@ $deployerConf.Element("Deployer").Element("Queue").Element("Location").Attribute
 									= $DeployerIncomingDirectory
 $ReceiverElement = $deployerConf.Element("Deployer").Element("HTTPSReceiver")
 $ReceiverElement.Attribute("Location") = $DeployerIncomingDirectory
-$licenceElement = [XElement]::Parse("<License Location='$LicensePath'/>")
+$licenseElement = [XElement]::Parse("<License Location='$LicensePath'/>")
 $ReceiverElement.AddAfterSelf($licenseElement)
 $deployerConf.Save("$UploadWebSiteDirectoryPath\bin\config\cd_deployer_conf.xml")
 
@@ -197,16 +197,28 @@ $MainWebSiteAppPool.recycling.periodicRestart.time = [TimeSpan]::Zero
 $MainWebSiteAppPool.processModel.identityType = "NetworkService"
 $MainWebSiteAppPool | set-item
 
-New-WebSite -Name $MainWebSiteName -Port 80 -HostHeader $MainWebSiteHostHeader -PhysicalPath $MainWebSiteDirectoryPath -ApplicationPool $MainWebSiteApplicationPoolName | Out-Null
+New-WebSite -Name $MainWebSiteName -Port 80 -HostHeader $MainWebSiteHostHeader -PhysicalPath $MainWebSiteDirectoryPath -ApplicationPool $MainWebSiteAppPoolName | Out-Null
 
 $UploadWebSiteAppPool = New-WebAppPool -Name $UploadWebSiteAppPoolName
 $UploadWebSiteAppPool.recycling.periodicRestart.time = [TimeSpan]::Zero
 $UploadWebSiteAppPool.processModel.identityType = "NetworkService"
 $UploadWebSiteAppPool | set-item
 
-New-WebSite -Name $UploadWebSiteName -Port 80 -HostHeader $UploadWebSiteHostHeader -PhysicalPath $UploadWebSiteDirectoryPath -ApplicationPool $UploadWebSiteApplicationPoolName | Out-Null
+New-WebSite -Name $UploadWebSiteName -Port 80 -HostHeader $UploadWebSiteHostHeader -PhysicalPath $UploadWebSiteDirectoryPath -ApplicationPool $UploadWebSiteAppPoolName | Out-Null
 
-# copy in the web config
-copy "$(split-path $MyInvocation.MyCommand.Path)\Web.config.base" "$MainWebSiteDirectoryPath\Web.config"
+# web config
+$webConfig = @"
+<?xml version="1.0"?>
+<configuration>
+  <system.web>
+    <pages>
+      <controls>
+        <add tagPrefix="tridion" namespace="Tridion.ContentDelivery.Web.UI" assembly="Tridion.ContentDelivery" />
+    	</controls>
+    </pages>
+  </system.web>
+</configuration>
+"@
+[XDocument]::Parse($webConfig).Save("$MainWebSiteDirectoryPath\Web.config")
 
 if (-not $NoIISReset) { iisreset -start }
