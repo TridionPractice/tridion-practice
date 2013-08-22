@@ -118,7 +118,7 @@ $previewStorageElement = CreateDatabaseStorageXElement -ServerName $previewDbSer
 							-DatabaseName $previewDatabaseName `
 							-DatabasePassword $previewDbPassword `
 							-DatabaseUserName $previewDbUserName `
-							-StorageElementId "StorageDb"
+							-StorageElementId "sessionDb"
 
 $wrappersElement.Element("Wrapper").AddFirst($previewStorageElement)							
 $storageConfig.Save($storageConfLocation)
@@ -135,8 +135,8 @@ $dynamicConfLocation = "$MainSiteDirPath\bin\config\cd_dynamic_conf.xml"
 $dynamicConfig = [XDocument]::Load($dynamicConfLocation)
 $publicationElement = $dynamicConfig.Element("Configuration").Element("URLMappings").Element("StaticMappings").Element("Publications").Element("Publication")
 $publicationElement.SetAttributeValue("Id", $webPublicationId)
-$publicationElement.Element("Host") | ? {$_.Attribute("Port").Value -eq "80"} | % {$_.SetAttributeValue("Domain", $MainWebSiteName)}
-$publicationElement.Element("Host") | ? {$_.Attribute("Port").Value -eq "8080"} | % {$_.Remove()}
+$publicationElement.Elements("Host") | ? {$_.Attribute("Port").Value -eq "80"} | % {$_.SetAttributeValue("Domain", $MainWebSiteName)}
+$publicationElement.Elements("Host") | ? {$_.Attribute("Port").Value -eq "8080"} | % {$_.Remove()}
 $dynamicConfig.Save($dynamicConfLocation)
 
 # cd_link_conf is already as it should be.
