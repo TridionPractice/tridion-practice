@@ -65,9 +65,21 @@ iisreset /stop
 							-NoIISReset
 
 # we want the xpm service to use the staging settings
-& "$currentPath\xpmweb.ps1" 		-TargetWebSiteName "staging.visitorsweb.local" `
+& "$currentPath\xpmweb.ps1" 		-InstallerHome $InstallerHome `
+					-sqlJdbcJar $SqlJdbcJar `
+					-XpmPreviewWebSiteName "xpmpreview.visitorsweb.local" `
+					-XpmPreviewAppPoolName "xpmpreview.visitorsweb.local" `
+					-TargetWebSiteName "staging.visitorsweb.local" `
                             		-UploadWebSiteName "upload.staging.visitorsweb.local" `
+                			-cdLicensePath $cdLicensePath `
+                			-LogDir $LogDir `
+					-InetPub $InetPub `
+					-brokerServerName = $brokerServerName `
                             		-brokerDatabaseName "Tridion_staging_broker" `
+					-brokerUserName "TridionBrokerUser" `
+					-previewDatabaseName $previewDatabaseName `
+					-PreviewDbUserName $previewDbUserName `
+					-PreviewDbPassword $previewDbPassword `
                             		-NoIISReset
 
 # fixups to make the staging site support xpm
@@ -79,7 +91,8 @@ iisreset /stop
 					-previewDbServerName $previewDbServerName `
 					-previewDatabaseName $previewDatabaseName `
 					-PreviewDbUserName $previewDbUserName `
-					-PreviewDbPassword $previewDbPassword 
+					-PreviewDbPassword $previewDbPassword `
+					-webPublicationId "5"
 
 iisreset /start
 
