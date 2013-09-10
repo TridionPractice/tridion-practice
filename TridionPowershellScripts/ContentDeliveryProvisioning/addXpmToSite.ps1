@@ -1,44 +1,39 @@
 param 
 (
-    [parameter(Mandatory=$false)]   
+    [parameter(Mandatory=$true)]   
     [ValidateScript({Test-Path $_})]
-    [string]$InetPub = "C:\inetpub",
+    [string]$InetPub,
 
-    [parameter(Mandatory=$false)]   
+    [parameter(Mandatory=$true)]   
     [ValidateScript({Test-Path $_})]
-    [string]$InstallerHome = "C:\Users\Administrator\Downloads\Tridion",
+    [string]$InstallerHome,
 
-    [parameter(Mandatory=$false)]
+    [parameter(Mandatory=$true)]
     [ValidateScript({Test-Path (split-path($_))})]
-    [string]$TempLocation = "C:\Users\Administrator\ScriptTempLocation",
+    [string]$TempLocation,
 
-    [parameter(Mandatory=$false)]   
-    [string]$MainWebSiteName = "www.visitorsweb.local",
+    [parameter(Mandatory=$true)]   
+    [string]$MainWebSiteName,
 
-    [parameter(Mandatory=$false)]   
-    [string]$UploadWebSiteName = "upload.visitorsweb.local",
+    [parameter(Mandatory=$true)]   
+    [string]$UploadWebSiteName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbServerName = "WSL117\DEV2012",
+    [parameter(Mandatory=$true)]
+    [string]$previewDbServerName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDatabaseName = "Tridion_XPM",
+    [parameter(Mandatory=$true)]
+    [string]$previewDatabaseName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbUserName = "TridionBrokerUser",
+    [parameter(Mandatory=$true)]
+    [string]$previewDbUserName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbPassword = "Tridion1", 
+    [parameter(Mandatory=$true)]
+    [string]$previewDbPassword, 
 
     [parameter(Mandatory=$true)]
     [string]$webPublicationId
 				
 )
-
-if (-not (test-path $InstallerHome)) 
-{
-    throw "$InstallerHome not found"
-}
 
 $scriptPath = Split-Path $script:MyInvocation.MyCommand.Path
 . "$scriptPath\TridionConfigurationFunctions.ps1"

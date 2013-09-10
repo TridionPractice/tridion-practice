@@ -1,3 +1,8 @@
+param(
+[Parameter(Mandatory=$false, HelpMessage='Prefix to let you test the scripts in a different directory etc.')]
+[string]$testPrefix
+)
+
 # Confirm destructive operation. Alternatively you could pass -NoClobber to createWebSite.ps1
 $caption = "Confirm"
 $message = "This script will delete your websites. Do you want to go ahead?"
@@ -15,11 +20,11 @@ $currentPath=Split-Path ((Get-Variable MyInvocation -Scope 0).Value).MyCommand.P
 $InetPub = "C:\inetpub"
 $InstallerHome = "C:\Users\Administrator\Downloads\Tridion"
 $TempLocation = "C:\Users\Administrator\ScriptTempLocation"
-$stagingVisitorsSiteName = "staging.visitorsweb.local"
-$stagingUploadSiteName = "upload.staging.visitorsweb.local"
+$stagingVisitorsSiteName = $testPrefix + "staging.visitorsweb.local"
+$stagingUploadSiteName = $testPrefix + "upload.staging.visitorsweb.local"
 $stagingIncomingDir = "C:\Tridion\incoming\stagingvisitorsweb"
-$liveVisitorsWebSiteName = "www.visitorsweb.local"
-$liveUploadWebSiteName = "upload.visitorsweb.local"
+$liveVisitorsWebSiteName = $testPrefix + "www.visitorsweb.local"
+$liveUploadWebSiteName = $testPrefix + "upload.visitorsweb.local"
 $liveIncomingDir = "c:\Tridion\Incoming\visitorsweb"
 $previewDbServerName = "DATABASE_SERVER"
 $brokerServerName = "DATABASE_SERVER"
@@ -66,18 +71,19 @@ iisreset /stop
 
 # we want the xpm service to use the staging settings
 & "$currentPath\xpmweb.ps1" 		-InstallerHome $InstallerHome `
-					-sqlJdbcJar $SqlJdbcJar `
+					-sqlJdbcJarPath $SqlJdbcJar `
 					-XpmPreviewWebSiteName "xpmpreview.visitorsweb.local" `
 					-XpmPreviewAppPoolName "xpmpreview.visitorsweb.local" `
 					-TargetWebSiteName "staging.visitorsweb.local" `
                             		-UploadWebSiteName "upload.staging.visitorsweb.local" `
-                			-cdLicensePath $cdLicensePath `
-                			-LogDir $LogDir `
+                			-LicensePath $cdLicensePath `
+                			-LoggingDirectoryPath $LogDir `
 					-InetPub $InetPub `
-					-brokerServerName = $brokerServerName `
-                            		-brokerDatabaseName "Tridion_staging_broker" `
-					-brokerUserName "TridionBrokerUser" `
-					-previewDatabaseName $previewDatabaseName `
+					-MainStorageDatabaseServerName = $brokerServerName `
+                            		-MainStorageDatabaseName "Tridion_staging_broker" `
+					-MainStorageDatabaseUsername "TridionBrokerUser" `
+					-MainStorageDatabasePassword "Tridion1" `
+					-PreviewDatabaseName $previewDatabaseName `
 					-PreviewDbUserName $previewDbUserName `
 					-PreviewDbPassword $previewDbPassword `
                             		-NoIISReset

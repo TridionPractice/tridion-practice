@@ -1,61 +1,61 @@
 ﻿# This script is to set up the XPM web service site. There is another script that injects the XPM settings into an existing web site.
 param 
 (
-    [parameter(Mandatory=$false)]   
+    [parameter(Mandatory=$true)]   
     [ValidateScript({Test-Path $_})]
-    [string]$InstallerHome = "C:\Users\Administrator\Downloads\Tridion",
+    [string]$InstallerHome,
     
-    [parameter(Mandatory=$false)]   
+    [parameter(Mandatory=$true)]   
     [ValidateScript({Test-Path $_})]
-    [string]$sqlJdbcJar = "C:\Users\Administrator\Downloads\sqljdbc4.jar",
+    [string]$sqlJdbcJarPath,
 
-    [parameter(Mandatory=$false)]   
-    [string]$XpmPreviewWebSiteName = "xpmpreview.visitorsweb.local",
+    [parameter(Mandatory=$true)]   
+    [string]$XpmPreviewWebSiteName,
 
-    [parameter(Mandatory=$false)]   
-    [string]$XpmPreviewAppPoolName = "xpmpreview.visitorsweb.local", 
+    [parameter(Mandatory=$true)]   
+    [string]$XpmPreviewAppPoolName, 
 
-    [parameter(Mandatory=$false)]   
-    [string]$UploadWebSiteName = "upload.visitorsweb.local",
+    [parameter(Mandatory=$true)]   
+    [string]$UploadWebSiteName,
     
-    [parameter(Mandatory=$false)]
+    [parameter(Mandatory=$true)]
     [ValidateScript({Test-Path $_})]
-    [string]$cdLicensePath = "C:\Program Files (x86)\Tridion\config\cd_licenses.xml",
+    [string]$LicensePath,
         
-    [parameter(Mandatory=$false)]
+    [parameter(Mandatory=$true)]
     [ValidateScript({Test-Path $_})]
-    [string]$logDir = "C:\Tridion\log",
+    [string]$LoggingDirectoryPath,
     
-    [parameter(Mandatory=$false)]   
+    [parameter(Mandatory=$true)]   
     [ValidateScript({Test-Path $_})]
-    [string]$InetPub = "C:\inetpub",
+    [string]$InetPub,
 
-    [parameter(Mandatory=$false)]
-    [string]$brokerServerName = "WSL117\DEV2012",
+    [parameter(Mandatory=$true)]
+    [string]$MainStorageDatabaseServerName,
 
-    [parameter(Mandatory=$false)]
-    [string]$brokerDatabaseName = "Tridion_broker",
+    [parameter(Mandatory=$true)]
+    [string]$MainStorageDatabaseName,
 
-    [parameter(Mandatory=$false)]
-    [string]$brokerUserName = "TridionBrokerUser",
+    [parameter(Mandatory=$true)]
+    [string]$MainStorageDatabaseUserName,
 
-    [parameter(Mandatory=$false)]
-    [string]$brokerPassword = "Tridion1",
+    [parameter(Mandatory=$true)]
+    [string]$MainStorageDatabasePassword,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbServerName = "WSL117\DEV2012",
+    [parameter(Mandatory=$true)]
+    [string]$PreviewDbServerName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDatabaseName = "Tridion_XPM",
+    [parameter(Mandatory=$true)]
+    [string]$PreviewDatabaseName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbUserName = "TridionBrokerUser",
+    [parameter(Mandatory=$true)]
+    [string]$PreviewDbUserName,
 
-    [parameter(Mandatory=$false)]
-    [string]$previewDbPassword = "Tridion1", 
+    [parameter(Mandatory=$true)]
+    [string]$PreviewDbPassword, 
     
-    [parameter(Mandatory=$false)]   
-    [string]$TargetWebSiteName = "staging.visitorsweb.local", 
+    [parameter(Mandatory=$true)]   
+    [string]$TargetWebSiteName, 
 
     [parameter(Mandatory=$false)]
     [switch]$NoIISReset = $false
@@ -128,7 +128,7 @@ cp "$uploadSiteDirPath\bin\config\cd_deployer_conf.xml" "$XpmPreviewSiteDirPath\
 # LINK config
 $linkConf = [xml](gc "$InstallerHome\Content Delivery\roles\preview\webservice\configuration\samples\cd_link_conf_sample.xml")
 $licenseElement = $linkConf.CreateElement("License")
-$licenseElement.SetAttribute("Location", $cdLicensePath)
+$licenseElement.SetAttribute("Location", $LicensePath)
 $linkConf.Configuration.AppendChild($licenseElement) | Out-Null
 $linkConf.Save("$XpmPreviewSiteDirPath\bin\config\cd_link_conf.xml")
 
@@ -137,7 +137,7 @@ $waiConf = [xml](gc "$InstallerHome\Content Delivery\roles\preview\webservice\co
 #TODO - or is the domain the same as visitorsweb
 $waiConf.Configuration.Presentations.Presentation.Host[0].Domain = $XpmPreviewWebSiteName
 $licenseElement = $waiConf.CreateElement("License")
-$licenseElement.SetAttribute("Location", $cdLicensePath)
+$licenseElement.SetAttribute("Location", $LicensePath)
 $waiConf.Configuration.AppendChild($licenseElement) | Out-Null
 $waiConf.Save("$XpmPreviewSiteDirPath\bin\config\cd_wai_conf.xml")
 
@@ -163,14 +163,14 @@ cp "$InstallerHome\Content Delivery\roles\preview\webservice\configuration\sampl
 #STORAGE 
 $storageConf = [xml](gc "$InstallerHome\Content Delivery\roles\preview\webservice\configuration\samples\cd_storage_conf_sample.xml")
 $licenseElement = $storageConf.CreateElement("License")
-$licenseElement.SetAttribute("Location", $cdLicensePath)
+$licenseElement.SetAttribute("Location", $LicensePath)
 $storageConf.Configuration.AppendChild($licenseElement) | Out-Null
 
 $previewStorageElement = CreateDatabaseStorageElement $storageConf $previewDbServerName $previewDatabaseName $previewDbUserName $previewDbPassword
 $sessionWrapper = $storageConf.Configuration.Global.Storages.Wrappers.Wrapper | ? {$_.Name -eq "SessionWrapper"}
 $sessionWrapper.AppendChild($previewStorageElement) | Out-Null
 
-$databaseStorageElement = CreateDatabaseStorageElement $storageConf $brokerServerName $brokerDatabaseName $brokerUserName $brokerPassword
+$databaseStorageElement = CreateDatabaseStorageElement $storageConf $MainStorageDatabaseServerName $MainStorageDatabaseName $MainStorageDatabaseUserName $MainStorageDatabasePassword
 $storageConf.Configuration.Global.Storages.AppendChild($databaseStorageElement) | Out-Null
 
 # We use the file system storage location of the target site. (i.e. the one which will display the XPM ui

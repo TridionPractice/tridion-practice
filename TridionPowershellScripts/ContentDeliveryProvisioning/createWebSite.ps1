@@ -36,7 +36,7 @@ param(
 	Mandatory=$true, 
 	HelpMessage='The directory into which you have unzipped the Tridion distribution you are installing')]
 [ValidateScript({Test-Path $_})]
-[string]$InstallerHome = 'C:\Users\Administrator\Downloads\Tridion',
+[string]$InstallerHome,
 
 [ValidateScript({Test-Path $_})]
 [Parameter(Mandatory=$true, HelpMessage='The path to the SQLJDBC jar file')]
