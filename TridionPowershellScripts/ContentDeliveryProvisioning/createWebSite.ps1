@@ -131,7 +131,7 @@ $deployerConf = [XDocument]::Load("$InstallerHome\Content Delivery\resources\con
 $deployerConf.Element("Deployer").Element("Queue").Element("Location").Attribute("Path").Value `
 									= $DeployerIncomingDirectory
 $ReceiverElement = $deployerConf.Element("Deployer").Element("HTTPSReceiver")
-$ReceiverElement.Attribute("Location") = $DeployerIncomingDirectory
+$ReceiverElement.Attribute("Location").Value = $DeployerIncomingDirectory
 $licenseElement = [XElement]::Parse("<License Location='$LicensePath'/>")
 $ReceiverElement.AddAfterSelf($licenseElement)
 $deployerConf.Save("$UploadWebSiteDirectoryPath\bin\config\cd_deployer_conf.xml")
