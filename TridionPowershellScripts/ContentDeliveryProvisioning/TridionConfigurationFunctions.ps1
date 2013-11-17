@@ -64,12 +64,12 @@ function CreateDatabaseStorageElement {
 
         $userNamePropertyElement = $storageConf.CreateElement("Property")
         $userNamePropertyElement.SetAttribute("Name","user")
-        $userNamePropertyElement.SetAttribute("Value",$brokerUserName)
+        $userNamePropertyElement.SetAttribute("Value",$DatabaseUserName)
         $dataSourceElement.AppendChild($userNamePropertyElement) | Out-Null
 
         $passwordPropertyElement = $storageConf.CreateElement("Property")
         $passwordPropertyElement.SetAttribute("Name","password")
-        $passwordPropertyElement.SetAttribute("Value",$brokerPassword)
+        $passwordPropertyElement.SetAttribute("Value",$DatabasePassword)
         $dataSourceElement.AppendChild($passwordPropertyElement) | Out-Null
     
         $brokerStorageElement.AppendChild($dataSourceElement) | Out-Null
