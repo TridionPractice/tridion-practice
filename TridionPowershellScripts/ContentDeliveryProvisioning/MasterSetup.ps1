@@ -79,7 +79,7 @@ iisreset /stop
                 			-LicensePath $cdLicensePath `
                 			-LoggingDirectoryPath $LogDir `
 					-InetPub $InetPub `
-					-MainStorageDatabaseServerName = $brokerServerName `
+					-MainStorageDatabaseServerName $brokerServerName `
                             		-MainStorageDatabaseName "Tridion_staging_broker" `
 					-MainStorageDatabaseUsername "TridionBrokerUser" `
 					-MainStorageDatabasePassword "Tridion1" `
