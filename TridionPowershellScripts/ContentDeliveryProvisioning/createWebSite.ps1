@@ -165,6 +165,9 @@ $ItemTypesElement = $storageConfig.Element("Configuration").Element("ItemTypes")
 $ItemTypesElement.SetAttributeValue("defaultStorageId","defaultDb")
 $ItemTypesElement.SetAttributeValue("cached","true")
 
+$itemTypesElement = $storageConfig.Element("Configuration").Element("ItemTypes")
+$itemTypesElement.Add([XElement]::Parse("<Item typeMapping='Binary' cached='false' storageId='defaultFile' />"))
+
 if ($StripConfigComments) {
 	$comments = $storageConfig.DescendantNodes() | ? {$_.NodeType -eq 'Comment'} 
 	$comments | % {$_.Remove()}
