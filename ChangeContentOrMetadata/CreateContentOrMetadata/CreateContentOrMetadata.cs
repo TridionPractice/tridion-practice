@@ -306,6 +306,19 @@ namespace Tridion.Practice
             get { return GetSubFields(i); }
         }
 
+        public LinkToCategoryData Category 
+        { 
+            get
+            {
+                var keywordFieldDefinition = this.definition as KeywordFieldDefinitionData;
+                if ((keywordFieldDefinition) != null)
+                {
+                    return keywordFieldDefinition.Category;
+                }
+                return null;
+            }
+        }
+
     }
 
     public class ValueCollection
