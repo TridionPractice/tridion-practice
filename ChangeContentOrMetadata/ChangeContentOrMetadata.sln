@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9D394117-D69E-4DC0-A934-DA538715F259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeContentOrMetadata", "ChangeContentOrMetadata\ChangeContentOrMetadata.csproj", "{983A058C-C4AA-4E8C-8F6A-3EDB71EF03C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeContentOrMetadata", "CreateContentOrMetadata\ChangeContentOrMetadata.csproj", "{983A058C-C4AA-4E8C-8F6A-3EDB71EF03C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
