@@ -319,6 +319,24 @@ namespace Tridion.Practice
             }
         }
 
+        public LinkToSchemaData[] AllowedTargetSchemas
+        {
+            get
+            {
+                var componentLinkFieldDefinition = this.definition as ComponentLinkFieldDefinitionData;
+                if (componentLinkFieldDefinition != null)
+                {
+                    return componentLinkFieldDefinition.AllowedTargetSchemas;
+                }
+                var multimediaLinkFieldDefinition = this.definition as MultimediaLinkFieldDefinitionData;
+                if (multimediaLinkFieldDefinition != null)
+                {
+                    return multimediaLinkFieldDefinition.AllowedTargetSchemas;
+                }
+                return null;
+            }
+        }
+
     }
 
     public class ValueCollection
