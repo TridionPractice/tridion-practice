@@ -1,4 +1,7 @@
-﻿$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
+﻿# Depends on PowerShell Reflection module (http://poshcode.org/search/Reflection)
+# Depends on Tridion Powershell Modules (http://code.google.com/p/tridion-powershell-modules/)
+
+$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 $core = Get-TridionCoreServiceClient
 Import-Module Tridion-CoreService
