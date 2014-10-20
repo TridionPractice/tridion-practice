@@ -35,6 +35,13 @@
 			{
 				color: #009;
 			}
+			pre 
+			{ 
+				display: inline-block; 
+				font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+				font-size: 14px; 
+				margin: 0px;
+			}
 			h2 { font-size: 20px; }
 			.section { display: none; }
 			.filter-area { background-color: #eee; color: navy;  }
@@ -164,6 +171,12 @@
 					return targetObject.ToString();
 				}
 			}
+			
+			protected string EscapeValue(object value)
+			{
+				//return HttpUtility.HtmlEncode(AsString(value));
+				return "<pre>" + HttpUtility.HtmlEncode(AsString(value)) + "</pre>";
+			}
 
             protected SortedDictionary<string, object> SortDictionary(IDictionary dictionary)
             {
@@ -282,7 +295,7 @@
                                 continue;
                             }
                             
-                            result += string.Format("<li>{0} = {1}</li>", AsString(childValue.Key), HttpUtility.HtmlEncode(AsString(childValue.Value)));
+                            result += string.Format("<li>{0} = {1}</li>", AsString(childValue.Key), EscapeValue(childValue.Value));
                         }
 
                         WriteRow(entry.Key.ToString(), result);
@@ -293,14 +306,14 @@
 
                         foreach (object childValue in (System.Collections.Generic.List<object>)value)
                         {
-                            result += string.Format("<li>{0}</li>", HttpUtility.HtmlEncode(AsString(childValue)));
+                            result += string.Format("<li>{0}</li>", EscapeValue(childValue));
                         }
 
                         WriteRow(entry.Key.ToString(), result);
                     }
 					else if (value is string[])
 					{
-						WriteRow(AsString(entry.Key), HttpUtility.HtmlEncode(StringArrayToString(value)));
+						WriteRow(AsString(entry.Key), EscapeValue(StringArrayToString(value)));
 					}
                     else if (value is object[])
                     {
@@ -308,14 +321,14 @@
 
                         foreach (object childValue in (object[])value)
                         {
-                            result += string.Format("<li>{0}</li>", HttpUtility.HtmlEncode(AsString(childValue)));
+                            result += string.Format("<li>{0}</li>", EscapeValue(childValue));
                         }
 
                         WriteRow(entry.Key.ToString(), result);
                     }
                     else
                     {
-                        WriteRow(AsString(entry.Key), HttpUtility.HtmlEncode(AsString(value)));
+                        WriteRow(AsString(entry.Key), EscapeValue(value));
                     }
                 }
 
