@@ -34,12 +34,13 @@
             }
         </script>
 		
-        <link rel="stylesheet" type="text/css" href="ClaimStore.css"></style>
+        <link rel="stylesheet" type="text/css" href="http://tridionpractice.github.io/tridion-practice/stylesheets/AmbientDataFramework/ClaimStore.css"></link>
+		
 		<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
-		<script src="Knockout-LocalStorage.js"></script>
-		<script src="ClaimModel.js"></script>
-		<script src="ClaimsViewModel.js"></script>
+		<script src="http://tridionpractice.github.io/tridion-practice/javascripts/AmbientDataFramework/Knockout-LocalStorage.js"></script>
+		<script src="http://tridionpractice.github.io/tridion-practice/javascripts/AmbientDataFramework/ClaimModel.js"></script>
+		<script src="http://tridionpractice.github.io/tridion-practice/javascripts/AmbientDataFramework/ClaimsViewModel.js"></script>
     </head>
     <body>
 		<div class='section'>
