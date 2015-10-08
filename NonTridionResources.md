@@ -82,3 +82,5 @@ Many SDL Tridion implementations use markup and designs from the customer or age
   * [Free Digital Photos](http://www.freedigitalphotos.net/) (recommended by Susan)
   * [Ionicons](http://ionicons.com/)
   * [Flat Icons Packs](http://www.flaticon.com/packs/)
+  * [List of sites for beautiful stock photos](https://blog.slideshare.net/2015/09/28/7-sites-for-free-and-beautiful-stock-photos/?utm_source=slideshare&utm_medium=ssemail&utm_campaign=newsletter)
+  * [https://thenounproject.com/](Icons)
