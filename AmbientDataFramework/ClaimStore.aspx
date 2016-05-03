@@ -1,4 +1,4 @@
-<%@Page Language="C#" EnableViewState="false"%>
+<%@Page Language="C#" EnableViewState="false" %>
 <%@Import Namespace="Tridion.ContentDelivery.AmbientData" %>
 <%@Import Namespace="System.Collections.Generic" %>
 <%@Import Namespace="System.Web.Script.Serialization" %>
@@ -12,7 +12,7 @@
 				if (Request.QueryString["format"] == "json")
 				{
 					IDictionary<System.Uri, object> values = AmbientDataContext.CurrentClaimStore.GetAll();
-					SortedDictionary<string, object> sorted = SortDictionary((IDictionary)values);
+					SortedDictionary<string, object> sorted = SortDictionary((IDictionary<System.Uri, object>)values);
 					
 					Response.Clear();
 					Response.ContentType = "text/json";
@@ -21,15 +21,14 @@
                 }
             }
 			
-            protected SortedDictionary<string, object> SortDictionary(IDictionary dictionary)
-            {
+            protected SortedDictionary<string, object> SortDictionary(IDictionary<System.Uri, object> dictionary)
+            {                
                 SortedDictionary<string, object> result = new SortedDictionary<string, object>();
                 
-                foreach (DictionaryEntry entry in dictionary)
+                foreach (System.Uri key in dictionary.Keys)
                 {
-                    result.Add(entry.Key.ToString(), entry.Value);
+                    result.Add(key.ToString(), dictionary[key]);
                 }
-
                 return result;
             }
         </script>
