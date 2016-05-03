@@ -1,5 +1,5 @@
 <%@Page Language="C#" EnableViewState="false" %>
-<%@Import Namespace="Tridion.ContentDelivery.AmbientData" %>
+<%@ Import Namespace="Sdl.Web.Delivery.ServicesCore.ClaimStore" %>
 <%@Import Namespace="System.Collections.Generic" %>
 <%@Import Namespace="System.Web.Script.Serialization" %>
 <html>
