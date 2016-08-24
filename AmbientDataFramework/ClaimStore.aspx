@@ -12,7 +12,7 @@
 				if (Request.QueryString["format"] == "json")
 				{
 					IDictionary<System.Uri, object> values = AmbientDataContext.CurrentClaimStore.GetAll();
-					SortedDictionary<string, object> sorted = SortDictionary((IDictionary)values);
+					var sorted = SortDictionary(values);
 					
 					Response.Clear();
 					Response.ContentType = "text/json";
@@ -21,11 +21,11 @@
                 }
             }
 			
-            protected SortedDictionary<string, object> SortDictionary(IDictionary dictionary)
+            protected SortedDictionary<string, object> SortDictionary(IDictionary<System.Uri, object> dictionary)
             {
-                SortedDictionary<string, object> result = new SortedDictionary<string, object>();
+                var result = new SortedDictionary<string, object>();
                 
-                foreach (DictionaryEntry entry in dictionary)
+                foreach (var entry in dictionary)
                 {
                     result.Add(entry.Key.ToString(), entry.Value);
                 }
