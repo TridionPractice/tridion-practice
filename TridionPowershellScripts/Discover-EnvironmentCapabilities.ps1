@@ -5,16 +5,15 @@
 )
 
 
-#Discover the token service
+# Ask the discovery service where to find token service: This looks like the only query you can make without an Authorization token
 $tokenCapabilities = Invoke-RestMethod -uri "$discoveryUrl/TokenServiceCapabilities"
 $tokenURL = $tokenCapabilities.content.properties.URI
 
 #Get a token
 $params = @{client_id=$client_id;client_secret=$client_secret;grant_type='client_credentials';resources='/'}
-
 $token = Invoke-RestMethod -Uri $tokenURL -Method POST -Body $params 
 
-#Query the Disco some more
+# Now use the token to make more interesting queries
 $Authorization = $token.token_type + ' ' + $token.access_token
 
 $metadataQueryURI = $discoveryURL + '/$metadata'
