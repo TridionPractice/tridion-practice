@@ -20,7 +20,6 @@ $Authorization = $token.token_type + ' ' + $token.access_token
 $metadataQueryURI = $discoveryURL + '/$metadata'
 $metadata = Invoke-RestMethod -Method Get -Uri $metadataQueryURI -Headers @{Authorization=$Authorization}
 
-$configuration = $metadata.Edmx.DataServices.Schema | ? {$_.Namespace -eq 'Tridion.WebDelivery.Configuration'}
 $platform = $metadata.Edmx.DataServices.Schema | ? {$_.Namespace -eq 'Tridion.WebDelivery.Platform'}
 
 $ns = @{edm="http://docs.oasis-open.org/odata/ns/edm"}
