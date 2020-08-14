@@ -33,7 +33,16 @@ foreach ($capabilityName in $capabilityNames) {
             Capability = $capabilityName
             Found = $true
             'Service URI' = $capabilityData.entry.content.properties.URI
-        })
+        })        
+        $modelServiceUri = ($capabilityData.entry.content.properties.ExtensionProperties.element | ?{$_.Key -eq 'dxa-model-service'}).Value
+        if ($modelServiceUri) {
+            New-Object PSObject -Property ([ordered]@{
+                Capability = "ModelServiceCapability"
+                Found = $true
+                'Service URI' = $modelServiceUri
+            })
+
+        }
     }
     catch {
         new-Object PSObject -Property ([ordered]@{
